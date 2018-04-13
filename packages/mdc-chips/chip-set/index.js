@@ -36,6 +36,15 @@ class MDCChipSet extends MDCComponent {
     this.chips;
     /** @type {(function(!Element): !MDCChip)} */
     this.chipFactory_;
+
+    /** @private {?Element} */
+    this.input_;
+    /** @type {(function(): !Element)} */
+    this.leadingIconFactory_;
+    /** @type {(function(): !Element)} */
+    this.trailingIconFactory_;
+    /** @type {(function(): !Element)} */
+    this.chipTextFactory_;
   }
 
   /**
@@ -50,9 +59,18 @@ class MDCChipSet extends MDCComponent {
    * @param {(function(!Element): !MDCChip)=} chipFactory A function which
    * creates a new MDCChip.
    */
-  initialize(chipFactory = (el) => new MDCChip(el)) {
+  initialize(
+    chipFactory = (el) => new MDCChip(el),
+    leadingIconFactory = () => null,
+    trailingIconFactory = () => null,
+    chipTextFactory = () => this.input_ ? this.input_.value : '') {
     this.chipFactory_ = chipFactory;
     this.chips = this.instantiateChips_(this.chipFactory_);
+
+    this.input_ = this.root_.querySelector(MDCChipSetFoundation.strings.INPUT_SELECTOR);
+    this.setLeadingIconFactory(leadingIconFactory);
+    this.setTrailingIconFactory(trailingIconFactory);
+    this.setChipTextFactory(chipTextFactory);
   }
 
   destroy() {
@@ -80,6 +98,18 @@ class MDCChipSet extends MDCComponent {
     this.chips.push(this.chipFactory_(chipEl));
   }
 
+  setLeadingIconFactory(leadingIconFactory) {
+    this.leadingIconFactory_ = leadingIconFactory;
+  }
+
+  setTrailingIconFactory(trailingIconFactory) {
+    this.trailingIconFactory_ = trailingIconFactory;
+  }
+
+  setChipTextFactory(chipTextFactory) {
+    this.chipTextFactory_ = chipTextFactory;
+  }
+
   /**
    * @return {!MDCChipSetFoundation}
    */
@@ -104,7 +134,29 @@ class MDCChipSet extends MDCComponent {
         }
         return chipEl;
       },
-      appendChild: (el) => this.root_.appendChild(el),
+      appendChip: (chipEl) => {
+        if (this.input_) {
+          this.root_.insertBefore(chipEl, this.input_);
+        } else {
+          this.root_.appendChild(chipEl);
+        }
+      },
+      registerInputInteractionHandler: (evtType, handler) => {
+        if (this.input_) {
+          this.input_.addEventListener(evtType, handler)
+        }
+      },
+      deregisterInputInteractionHandler: (evtType, handler) => {
+        if (this.input_) {
+          this.input_.removeEventListener(evtType, handler)
+        }
+      },
+      createLeadingIcon: () => this.leadingIconFactory_(),
+      createTrailingIcon: () => this.trailingIconFactory_(),
+      createChipText: () => this.chipTextFactory_(),
+      getInputValue: () => this.input_ ? this.input_.value : '',
+      clearInput: () => this.input_ ? this.input_.value = '' : '',
+      pushChip: (chipEl) => this.chips.push(this.chipFactory_(chipEl)),
     })));
   }
 

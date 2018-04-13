@@ -18,6 +18,7 @@
 /** @enum {string} */
 const strings = {
   CHIP_SELECTOR: '.mdc-chip',
+  INPUT_SELECTOR: '.mdc-chip-set--entry__input',
 };
 
 /** @enum {string} */

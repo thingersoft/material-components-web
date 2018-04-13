@@ -93,7 +93,8 @@
 @mixin mdc-chip-set-spacing($gap-size) {
   padding: $gap-size / 2;
 
-  .mdc-chip {
+  .mdc-chip,
+  .mdc-chip-set--entry__input {
     margin: $gap-size / 2;
   }
 }

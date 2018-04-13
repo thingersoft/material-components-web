@@ -40,3 +40,8 @@
 .mdc-chip-set--entry .mdc-chip {
   animation: mdc-chip-entry 100ms $mdc-animation-deceleration-curve-timing-function;
 }
+
+.mdc-chip-set--entry__input {
+  border: none;
+  outline: none;
+}

@@ -62,16 +62,20 @@ class MDCChipSetFoundation extends MDCFoundation {
 
     /** @private {function(!Event): undefined} */
     this.chipInteractionHandler_ = (evt) => this.handleChipInteraction_(evt);
+    /** @private {function(!Event): undefined} */
+    this.inputInteractionHandler_ = (evt) => this.handleInputInteraction_(evt);
   }
 
   init() {
     this.adapter_.registerInteractionHandler(
       MDCChipFoundation.strings.INTERACTION_EVENT, this.chipInteractionHandler_);
+    this.adapter_.registerInputInteractionHandler('keydown', this.inputInteractionHandler_);
   }
 
   destroy() {
     this.adapter_.deregisterInteractionHandler(
       MDCChipFoundation.strings.INTERACTION_EVENT, this.chipInteractionHandler_);
+    this.adapter_.deregisterInputInteractionHandler('keydown', this.inputInteractionHandler_);
   }
 
   /**
@@ -84,7 +88,7 @@ class MDCChipSetFoundation extends MDCFoundation {
    */
   addChip(text, leadingIcon, trailingIcon) {
     const chipEl = this.adapter_.createChipElement(text, leadingIcon, trailingIcon);
-    this.adapter_.appendChild(chipEl);
+    this.adapter_.appendChip(chipEl);
     return chipEl;
   }
 
@@ -133,6 +137,22 @@ class MDCChipSetFoundation extends MDCFoundation {
       } else {
         this.select(chipFoundation);
       }
+    }
+  }
+
+  /**
+   * Handles an input interaction event
+   * @param {!Event} evt
+   * @private
+   */
+  handleInputInteraction_(evt) {
+    if ((evt.key === 'Enter' || evt.keyCode === 13) &&  this.adapter_.getInputValue() !== '') {
+      var leadingIcon = this.adapter_.createLeadingIcon();
+      var trailingIcon = this.adapter_.createTrailingIcon();
+      const text = this.adapter_.createChipText();
+      const newChip = this.addChip(text, leadingIcon, trailingIcon);
+      this.adapter_.pushChip(newChip);
+      this.adapter_.clearInput();
     }
   }
 }
