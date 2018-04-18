@@ -19,6 +19,8 @@
 @mixin mdc-notched-outline-idle-color($color) {
   .mdc-notched-outline__idle {
     @include mdc-theme-prop(border-color, $color);
+
+    transition: mdc-notched-outline-transition(opacity), mdc-text-field-transition(border-color);
   }
 }
 
