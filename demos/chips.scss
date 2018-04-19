@@ -28,3 +28,8 @@
   @include mdc-chip-selected-ink-color($mdc-theme-secondary);
   @include mdc-chip-stroke(2px, solid, $mdc-theme-secondary);
 }
+
+#entry-chip-set {
+  border-bottom: 1px solid rgba(0, 0, 0, .54);
+  max-width: 700px;
+}
