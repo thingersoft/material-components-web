@@ -74,6 +74,25 @@ You can optionally add a leading icon (i.e. thumbnail) and/or a trailing icon to
 </div>
 ```
 
+#### Entry Chips
+
+Entry chips are a variant of chips which represent information used in fields, such as an entity (person, place, or thing). They enable user input by converting text into chips. This requires input chips to come with an input element:
+
+```html
+<div class="mdc-chip-set mdc-chip-set--entry">
+  <div class="mdc-chip" tabindex="0">
+    <div class="mdc-chip__text">Chip content</div>
+  </div>
+  <div class="mdc-chip" tabindex="0">
+    <div class="mdc-chip__text">Chip content</div>
+  </div>
+  <div class="mdc-chip" tabindex="0">
+    <div class="mdc-chip__text">Chip content</div>
+  </div>
+  <input class="mdc-chip-set--entry__input">
+</div>
+```
+
 #### Filter Chips
 
 Filter chips are a variant of chips which allow multiple selection from a set of options. When a filter chip is selected, a checkmark appears as the leading icon. If the chip already has a leading icon, the checkmark replaces it. This requires the HTML structure of a filter chip to differ from other chips:
@@ -194,6 +213,9 @@ Property | Value Type | Description
 Method Signature | Description
 --- | ---
 `addChip(text: string, leadingIcon: Element, trailingIcon: Element) => void` | Creates a new chip in the chip set with the given text, leading icon, and trailing icon
+`setLeadingIconFactory(function(): !Element) => void` | Sets the factory for the leading icon element in newly added entry chips
+`setTrailingIconFactory(function(): !Element) => void` | Sets the factory for the trailing icon element in newly added entry chips
+`setChipTextFactory(function(): !Element) => void` | Sets the factory for the chip text in newly added entry chips
 
 Property | Value Type | Description
 --- | --- | ---
@@ -230,6 +252,14 @@ Method Signature | Description
 `deregisterInteractionHandler(evtType: string, handler: EventListener) => void` | Deregisters an event handler on the root element for a given event
 `createChipElement(text: string, leadingIcon: Element, trailingIcon: Element) => Element` | Returns a chip element with the given text, leading icon, and trailing icon
 `appendChild(el: Element) => void` | Appends the given element as a child of the root element
+`registerInputInteractionHandler(evtType: string, handler: EventListener) => void` | Registers an event handler on the input element for a given event
+`deregisterInputInteractionHandler(evtType: string, handler: EventListener) => void` | Deregisters an event handler on the input element for a given event
+`createLeadingIcon() => Element` | Returns a leading icon element for a newly added entry chip
+`createTrailingIcon() => Element` | Returns a trailing icon element for a newly added entry chip
+`createChipText() => string` | Returns the chip text for a newly added entry chip
+`getInputValue() => string` | Returns the value of the input element
+`clearInput() => void` | Clears the value of the input element
+`pushChip(chipEl: Element) => void` | Creates a new chip object and pushes it onto the chip set
 
 ### Foundations: `MDCChipFoundation` and `MDCChipSetFoundation`
 

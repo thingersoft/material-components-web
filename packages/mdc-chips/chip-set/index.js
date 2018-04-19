@@ -98,14 +98,26 @@ class MDCChipSet extends MDCComponent {
     this.chips.push(this.chipFactory_(chipEl));
   }
 
+  /**
+   * Sets the factory for the leading icon element in newly added entry chips.
+   * @param {(function(): !Element)}
+   */
   setLeadingIconFactory(leadingIconFactory) {
     this.leadingIconFactory_ = leadingIconFactory;
   }
 
+  /**
+   * Sets the factory for the trailing icon element in newly added entry chips.
+   * @param {(function(): !Element)}
+   */
   setTrailingIconFactory(trailingIconFactory) {
     this.trailingIconFactory_ = trailingIconFactory;
   }
 
+  /**
+   * Sets the factory for the chip text in newly added entry chips.
+   * @param {(function(): !Element)}
+   */
   setChipTextFactory(chipTextFactory) {
     this.chipTextFactory_ = chipTextFactory;
   }
@@ -134,7 +146,7 @@ class MDCChipSet extends MDCComponent {
         }
         return chipEl;
       },
-      appendChip: (chipEl) => {
+      appendChild: (chipEl) => {
         if (this.input_) {
           this.root_.insertBefore(chipEl, this.input_);
         } else {

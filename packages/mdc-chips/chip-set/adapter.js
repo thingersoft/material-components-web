@@ -63,6 +63,55 @@ class MDCChipSetAdapter {
    * @param {?Element} el
    */
   appendChild(el) {}
+
+  /**
+   * Registers an event handler on the input element for a given event.
+   * @param {string} evtType
+   * @param {function(!Event): undefined} handler
+   */
+  registerInputInteractionHandler(evtType, handler) {}
+
+  /**
+   * Deregisters an event handler on the input element for a given event.
+   * @param {string} evtType
+   * @param {function(!Event): undefined} handler
+   */
+  deregisterInputInteractionHandler(evtType, handler) {}
+
+  /**
+   * Returns a leading icon element for a newly added entry chip.
+   * @return {!Element}
+   */
+  createLeadingIcon() {}
+
+  /**
+   * Returns a trailing icon element for a newly added entry chip.
+   * @return {!Element}
+   */
+  createTrailingIcon() {}
+
+  /**
+   * Returns the chip text for a newly added entry chip.
+   * @return {!Element} el
+   */
+  createChipText() {}
+
+  /**
+   * Returns the value of the input element.
+   * @return {string}
+   */
+  getInputValue() {}
+
+  /**
+   * Clears the value of the input element.
+   */
+  clearInput() {}
+
+  /**
+   * Creates a new chip object and pushes it onto the chip set.
+   * @param {!Element} chipEl
+   */
+  pushChip(chipEl) {}
 }
 
 export default MDCChipSetAdapter;
