@@ -35,6 +35,9 @@ test('exports cssClasses', () => {
 test('defaultAdapter returns a complete adapter implementation', () => {
   verifyDefaultAdapter(MDCChipSetFoundation, [
     'hasClass', 'registerInteractionHandler', 'deregisterInteractionHandler',
+    'registerInputInteractionHandler', 'deregisterInputInteractionHandler',
+    'createLeadingIcon', 'createTrailingIcon', 'createChipText', 'getInputValue',
+    'clearInput', 'pushChip',
   ]);
 });
 
@@ -183,4 +186,24 @@ test('in filter chips, on custom MDCChip:interaction event deselects selected ch
   });
   td.verify(chipA.foundation.setSelected(false));
   assert.equal(foundation.selectedChips_.length, 0);
+});
+
+test('on input keydown creates new chip element and object', () => {
+  const {foundation, mockAdapter, chipA, chipB} = setupTest();
+  const handlers = captureHandlers(mockAdapter, 'registerInputInteractionHandler');
+  const mockEvt = {
+    type: 'keydown',
+    key: 'Enter',
+  };
+  td.when(mockAdapter.getInputValue()).thenReturn('hello');
+  
+  foundation.init();
+  handlers.keydown(mockEvt);
+
+  td.verify(mockAdapter.createLeadingIcon());
+  td.verify(mockAdapter.createTrailingIcon());
+  td.verify(mockAdapter.createChipText());
+  td.verify(foundation.addChip(td.matchers.anything(), td.matchers.anything(), td.matchers.anything()));
+  td.verify(mockAdapter.pushChip(td.matchers.anything()));
+  td.verify(mockAdapter.clearInput());
 });
