@@ -102,13 +102,6 @@
     .mdc-drawer__drawer {
       @include mdc-slideable-drawer-open;
     }
-
-    // Specificity fix to ensure that mdc-drawer is not translated off-screen within an RTL context
-    @include mdc-rtl {
-      .mdc-drawer__drawer {
-        @include mdc-slideable-drawer-open;
-      }
-    }
   }
 
   &.mdc-drawer--animating {
